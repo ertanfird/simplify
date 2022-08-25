@@ -1,16 +1,17 @@
 import React from 'react';
+import {Routes, Route, Link} from 'react-router-dom';
 import './styles/main.scss';
-import Logo from './assets/img/Logo.svg';
+import Loginpage from './pages/Loginpage';
+import Signpage from './pages/Signpage';
 
 function App() {
   return (
     <div className="App">
-      <img src={Logo} alt="Simplify"  className="logo"/>
-      <div className="form">
-        <input type="text" className="input" placeholder='E-mail' />
-        <input type="password" className="input" placeholder='Password'/>
-        <input type="submit" value="Login" className="button"/>
-      </div>
+    <Routes>
+      <Route path="/" element={ [<Loginpage />] } />
+      <Route path="/signup" element={ [<Signpage />] } />
+      <Route path="*" element={ [] } />
+    </Routes>
     </div>
   );
 }

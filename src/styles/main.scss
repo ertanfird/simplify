@@ -29,31 +29,3 @@ body {
   color: #777879;
   background-color: #FBFBFB;
 }
-
-.logo {
-  width: 210px;
-  margin-bottom: 100px;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 38px;
-  margin-bottom: 100px;
-}
-
-
-
-.button {
-  padding: 12px 40px;
-  border: none;
-  border-radius: 22px;
-  width: fit-content;
-  color: white;
-  background: #79A6D2;
-  box-shadow: inset -2px -2px 3px #4B7FB1, inset 2px 2px 3px rgba(204, 221, 237, 0.72);
-  cursor: pointer;
-
-  &:hover {}
-}
