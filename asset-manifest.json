@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/simlify/static/css/main.e827e5d8.css",
+    "main.js": "/simlify/static/js/main.0b4c69bd.js",
+    "static/js/787.7b11bd47.chunk.js": "/simlify/static/js/787.7b11bd47.chunk.js",
+    "static/media/Logo.svg": "/simlify/static/media/Logo.00509eddf490deb1f0aa8d551b1526f4.svg",
+    "index.html": "/simlify/index.html",
+    "main.e827e5d8.css.map": "/simlify/static/css/main.e827e5d8.css.map",
+    "main.0b4c69bd.js.map": "/simlify/static/js/main.0b4c69bd.js.map",
+    "787.7b11bd47.chunk.js.map": "/simlify/static/js/787.7b11bd47.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e827e5d8.css",
+    "static/js/main.0b4c69bd.js"
+  ]
+}
