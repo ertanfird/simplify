@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.763d5b59.css",
-    "main.js": "/static/js/main.a09c2cac.js",
-    "static/js/787.7b11bd47.chunk.js": "/static/js/787.7b11bd47.chunk.js",
-    "static/media/Logo.svg": "/static/media/Logo.00509eddf490deb1f0aa8d551b1526f4.svg",
-    "index.html": "/index.html",
-    "main.763d5b59.css.map": "/static/css/main.763d5b59.css.map",
-    "main.a09c2cac.js.map": "/static/js/main.a09c2cac.js.map",
-    "787.7b11bd47.chunk.js.map": "/static/js/787.7b11bd47.chunk.js.map"
+    "main.css": "/simplify/static/css/main.763d5b59.css",
+    "main.js": "/simplify/static/js/main.f014013f.js",
+    "static/js/787.7b11bd47.chunk.js": "/simplify/static/js/787.7b11bd47.chunk.js",
+    "static/media/Logo.svg": "/simplify/static/media/Logo.00509eddf490deb1f0aa8d551b1526f4.svg",
+    "index.html": "/simplify/index.html",
+    "main.763d5b59.css.map": "/simplify/static/css/main.763d5b59.css.map",
+    "main.f014013f.js.map": "/simplify/static/js/main.f014013f.js.map",
+    "787.7b11bd47.chunk.js.map": "/simplify/static/js/787.7b11bd47.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.763d5b59.css",
-    "static/js/main.a09c2cac.js"
+    "static/js/main.f014013f.js"
   ]
 }
