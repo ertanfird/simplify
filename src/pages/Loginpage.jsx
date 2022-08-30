@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from '../assets/img/Logo.svg';
 
-const Loginpage = ({ props }) => (
+const Loginpage = ({ theme }) => (
   <div className='container'>
     <div className="header">
       <Link to="../signup" >Sign up</Link>
       <div className="theme__wrapper">
-        <div className="theme"></div>
+        <div className="theme" ></div>
       </div>
     </div>
     <img src={Logo} alt="Simplify" className="logo" />

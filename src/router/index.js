@@ -13,3 +13,26 @@ export const publicRoutes = [
   {path: '/signup', element: <Signpage />, exact: true},
   {path: '*', element: `Error 404`, exact: true}
 ]
+
+//   {isAuth
+//   ?
+//   <Routes >
+//       {privateRoutes.map(route =>
+//         <Route
+//           path={route.path}
+//           element={route.element}
+//           exact={route.exact}
+//         />
+//       )}
+//   </Routes>
+//   :
+//   <Routes >
+//       {publicRoutes.map(route =>
+//         <Route
+//           path={route.path}
+//           element={route.element}
+//           exact={route.exact}
+//         />
+//       )}
+//   </Routes>
+// }

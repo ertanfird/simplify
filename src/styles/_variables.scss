@@ -1,4 +1,19 @@
 //colors
+html[data-theme="light"] {
+  --text-color: #777879;
+  --text-inverse-color: #FBFBFB;
+  --background-color: #FBFBFB;
+  --field-color: #FFFFFF;
+  --blue-color: #79A6D2;
+}
+
+html[data-theme="dark"] {
+  --text-color: #FBFBFB;
+  --text-inverse-color: #222222;
+  --background-color: #222222;
+  --field-color: #777879;
+  --blue-color: #79A6D2;
+}
+
 
 //font-size
-

@@ -7,7 +7,7 @@
   cursor: pointer;
 
   &:checked + &__label::before {
-    background-color: #79A6D2;
+    background-color: var(--blue-color);
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1), -1px -1px 1px rgba(0, 0, 0, 0.04), inset 0px 0px 0px 3px rgba(255, 255, 255, 1);
   }
 

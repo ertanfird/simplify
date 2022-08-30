@@ -4,6 +4,6 @@
   border-radius: 22px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15), -1px -1px 2px rgba(0, 0, 0, 0.04), inset -1px -1px 3px rgba(0, 0, 0, 0.1);
   width: 100%;
-  color: #777879;
-  background-color: white;
+  color: var(--text-color);
+  background-color: var(--field-color);
 }
