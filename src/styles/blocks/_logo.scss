@@ -1,4 +1,12 @@
 .logo {
-  width: 210px;
+  display: flex;
+  align-items: center;
+  font-size: 32px;
   margin-bottom: 60px;
+  font-family: "MontserratAlternates-Medium";
+
+  &__picture {
+    width: 40px;
+    margin-right: 12px;
+  }
 }

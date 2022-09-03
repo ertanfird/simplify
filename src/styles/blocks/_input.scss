@@ -2,8 +2,12 @@
   padding: 12px 40px;
   border: none;
   border-radius: 22px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15), -1px -1px 2px rgba(0, 0, 0, 0.04), inset -1px -1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 2px 2px var(--shadow1-color), -1px -1px 2px var(--shadow2-color), inset -1px -1px 3px var(--shadow3-color);
   width: 100%;
   color: var(--text-color);
   background-color: var(--field-color);
+
+  &::placeholder{
+    color: var(--text-color);
+  }
 }

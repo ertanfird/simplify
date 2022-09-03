@@ -1,10 +1,11 @@
 import {Navigate} from 'react-router-dom';
 import Loginpage from '../pages/Loginpage';
 import Signpage from '../pages/Signpage';
+import Main from '../pages/Main';
 
 export const privateRoutes = [
-  {path: '/', element: 'Message', exact: true},
-  {path: '*', element: `Error 404`, exact: true}
+  {path: '/', element: <Main />, exact: true},
+  {path: '*', element: <Navigate to="/" replace />, exact: true}
 ]
 
 export const publicRoutes = [
