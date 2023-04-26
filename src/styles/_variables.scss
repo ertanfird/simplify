@@ -1,0 +1,38 @@
+//colors
+html[data-theme="light"] {
+  --text-color: #222324;
+  --text-color-light: #777879;
+  --text-inverse-color: #FBFBFB;
+  --background-color: #FBFBFB;
+  --field-color: #FFFFFF;
+  --white-color: #FFFFFF;
+  --gray-color: #efefef;
+  --liteblue-color: #e8f0fe;
+  --blue-color: #79A6D2;
+  --shadow1-color: rgba(0, 0, 0, 0.18);
+  --shadow2-color: rgba(0, 0, 0, 0.08);
+  --shadow3-color: rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="dark"] {
+  --text-color: #e0e0e0;
+  --text-color-light: #e0e0e0;
+  --text-inverse-color: #222324;
+  --background-color: #3c3b48;
+  --field-color: #353540;
+  --white-color: #EFF0F2;
+  --gray-color: #2A2A30;
+  --liteblue-color: #2A2A30;
+  --blue-color: #79A6D2;
+  --shadow1-color: rgba(0, 0, 0, 0.3);
+  --shadow2-color: rgba(0, 0, 0, 0.1);
+  --shadow3-color: rgba(0, 0, 0, 0.2);
+}
+
+:root{
+  --member-color: rgba(1, 57, 210, 0.21);
+}
+
+
+
+//font-size

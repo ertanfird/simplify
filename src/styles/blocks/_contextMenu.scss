@@ -1,0 +1,23 @@
+.contextMenu {
+  position: absolute;
+  top: 50%;
+  transform: translate(-100%, 0);
+  width: 200px;
+  font-size: 14px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px var(--shadow1-color), -1px -1px 0px var(--shadow2-color), inset -1px -1px 3px var(--shadow3-color);
+  z-index: 9999;
+  overflow: hidden;
+
+  &__item {
+    padding: 8px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid var(--gray-color);
+
+    &:hover {
+      background-color: var(--liteblue-color);
+    }
+  }
+}

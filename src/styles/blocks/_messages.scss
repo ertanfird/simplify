@@ -1,0 +1,198 @@
+.messages {
+  width: 100%;
+  min-width: 440px;
+  height: 100%;
+  background: linear-gradient(90deg, var(--member-color) 0%, var(--background-color) 100%);
+  position: relative;
+  box-shadow: 1px 1px 1px inset var(--shadow3-color);
+  z-index: 0;
+
+  @include largeMobile {
+    min-width: auto;
+    max-width: 100%;
+  }
+
+  &__promt {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+  }
+
+  &__header {
+    box-shadow: 2px 1px 2px var(--shadow1-color);
+    background-color: var(--background-color);
+    padding: 12px 20px;
+    border-radius: 0 0 24px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    height: calc(24px + 68px);
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 24px;
+      height: 24px;
+      background-color: transparent;
+      box-shadow: -10px -10px 0 10px var(--background-color), 1px 1px 1px inset var(--shadow3-color);
+      transform: translateY(100%);
+      border-top-left-radius: 36px;
+    }
+  }
+
+  &__more {
+    width: 24px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+
+    & svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+    height: calc(100% - (24px + 68px) - (16px + 2 * 12px) - 20px);
+    overflow: auto;
+    scrollbar-color: var(--gray-color) rgba($color: #000000, $alpha: 0);
+    scrollbar-width: thin;
+
+    &::-webkit-scrollbar {
+      width: 6px; /* ширина для вертикального скролла */
+      height: 6px; /* высота для горизонтального скролла */
+      background-color: rgba($color: #000000, $alpha: 0);
+      border-radius: 9em;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--gray-color);
+      border-radius: 9em;
+      //box-shadow: inset 0px 0px 4px var(--background-color);
+    }
+  }
+
+  &__container {
+    width: 80%;
+    margin: 40px 0 60px 0;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    gap: 40px;
+
+    @include smallTablet {
+      width: 100%;
+      padding: 0 20px;
+    }
+  }
+
+  &__form {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__input {
+    width: 100%;
+    position: relative;
+    min-width: 400px;
+
+    @include largeMobile {
+      border-radius: 0;
+      bottom: 0;
+    }
+  }
+
+  &__send {
+    background-color: rgba($color: #000000, $alpha: 0);
+    border: none;
+    position: absolute;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 24px;
+    width: 24px;
+    color: var(--blue-color);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0;
+    }
+
+    & svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &__message {
+    font-family: "Exo", sans-serif;
+    padding: 12px 20px;
+    background-color: var(--field-color);
+    word-break: break-word;
+    font-size: 14px;
+    width: max-content;
+    max-width: 60%;
+    border-radius: 22px;
+    box-shadow: 2px 2px 3px var(--shadow1-color), -4px -4px 6px var(--shadow2-color),
+      inset -2px -2px 4px var(--shadow3-color);
+
+    &-mine {
+      border-bottom-right-radius: 0;
+      margin-left: auto;
+
+      background-color: var(--blue-color);
+      color: var(--text-inverse-color);
+    }
+    &-other {
+      border-top-left-radius: 0;
+      margin-right: auto;
+    }
+  }
+
+  @include smallTablet {
+    &__container {
+      width: 100%;
+      padding: 0 20px;
+    }
+  }
+
+  @include largeMobile {
+    min-width: auto;
+    max-width: 100%;
+
+    &__header {
+      border-radius: 0;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    &__form {
+      width: 100%;
+      bottom: 0;
+    }
+
+    &__input {
+      min-width: auto;
+      padding: 20px;
+      box-shadow: 2px 1px 2px var(--shadow1-color);
+    }
+  }
+}

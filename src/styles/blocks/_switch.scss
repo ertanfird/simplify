@@ -1,0 +1,65 @@
+.switch {
+    position: absolute;
+    opacity: 00;
+    width: 100%;
+    height: 24px;
+    z-index: 10;
+    cursor: pointer;
+
+    &:checked + &__label::before {
+        transform: translate(100%, -50%);
+    }
+
+    &:checked + &__label-inverse::before {
+        transform: translate(0%, -50%);
+    }
+
+    &__wrapper {
+        display: flex;
+        position: relative;
+        align-items: center;
+    }
+
+    &__label {
+        padding-left: 50px;
+        position: relative;
+        cursor: pointer;
+        
+
+        &::after {
+            position: absolute;
+            content: '';
+            top: 50%;
+            left: 0;
+            transform: translate(0%, -50%);
+            border-radius: 22px;
+            background-color: var(--gray-color);
+            box-shadow: inset 0px 0px 2px rgba(0, 0, 0, 0.3);
+            width: 50px;
+            height: 24px;
+        }
+
+        &::before {
+            position: absolute;
+            content: '';
+            top: 50%;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background-color: var(--background-color);
+            border-radius: 50%;
+            box-shadow: 1px 1px 2px var(--shadow1-color), -1px -1px 0px var(--shadow2-color), inset -1px -1px 3px var(--shadow3-color);
+            transform: translate(0%, -50%);
+            transition: transform ease 0.28s;
+            z-index: 2;
+        }
+
+        &-inverse::before{
+            transform: translate(100%, -50%);
+        }
+
+        & span {
+            margin-left: 8px;
+        }
+    }
+}

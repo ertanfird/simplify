@@ -1,0 +1,4 @@
+@function per($pxOne, $pxTwo) {
+    $result: ($pxOne / $pxTwo) * 100%;
+    @return $result;
+}

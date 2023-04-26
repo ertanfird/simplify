@@ -1,0 +1,33 @@
+.input {
+  padding: 10px 40px;
+  position: relative;
+  font-size: 16px;
+  border: none;
+  border-radius: 22px;
+  box-shadow: 2px 2px 2px var(--shadow1-color), -1px -1px 0px var(--shadow2-color), inset -1px -1px 3px var(--shadow3-color);
+  width: 100%;
+  color: var(--text-color);
+  background-color: var(--field-color);
+  font-family: "Exo", sans-serif;
+  opacity: 0.9;
+
+  &::placeholder {
+    color: var(--text-color-light);
+  }
+
+  &:focus {
+    background-color: var(--liteblue-color);
+  }
+
+  &-internal-autofill-selected {
+    background-color: -internal-light-dark(#e8f0fe, #465a7e66) !important;
+  }
+
+  &-active {
+    box-shadow: 2px 2px 2px var(--shadow1-color), -1px -1px 0px var(--shadow2-color), inset -1px -1px 3px var(--shadow3-color), inset 0 0 7px rgba(31, 91, 222, 0.499);
+  }
+
+  &-wrapper {
+    width: 100%;
+  }
+}

@@ -1,0 +1,60 @@
+.popup{
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 100%;
+  max-width: 360px;
+  font-size: 14px;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 2px 2px 2px var(--shadow1-color), -1px -1px 0px var(--shadow2-color), inset -1px -1px 3px var(--shadow3-color);
+  z-index: 9999;
+  overflow: hidden;
+
+  &__wrapper {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba($color: #000000, $alpha: 0.7);
+    z-index: 9998;
+  }
+
+  &__title {
+    font-size: 24px;
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 0 12px 0;
+  }
+
+  &__item {
+    padding: 8px 12px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--liteblue-color);
+    }
+
+    &-red {
+      color: #ff0000;
+    }
+  }
+}
