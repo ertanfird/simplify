@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { HiOutlineX } from "@react-icons/all-files/hi/HiOutlineX";
-import { onDelete } from '../../api/User';
 import Context from '../../context';
+import onDelete from '../../api/Account/Delete';
 
 export default function Popup({setPopupStatus}) {
   const ctx = useContext(Context);

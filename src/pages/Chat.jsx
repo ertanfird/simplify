@@ -1,8 +1,6 @@
 import * as signalR from '@microsoft/signalr';
 import md5 from 'md5';
 import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
-import { onSend } from '../api/Messages';
-import { getToken } from '../api/Auth';
 import Alert from '../components/Layout/Alert';
 import Sidebar from '../components/Layout/Sidebar';
 import Input from '../components/UI/Input';
@@ -13,6 +11,8 @@ import { HiArrowLeft } from "@react-icons/all-files/hi/HiArrowLeft";
 import { HiDotsVertical } from "@react-icons/all-files/hi/HiDotsVertical";
 import ContextMenu from '../components/UI/ContextMenu';
 import Popup from '../components/UI/Popup';
+import onRefreshToken from '../api/Auth/RefreshToken';
+import getUsers from '../api/Users/Get';
 
 const reduceDialogues = (state, action) => {
 
@@ -187,6 +187,7 @@ export default function Chat(props) {
       }
       <Sidebar
         users={users}
+        setUsers={setUsers}
         setSelectDialogue={setSelectDialogue}
         dialogues={dialogues}
         dispatchDialogues={dispatchDialogues}
@@ -238,14 +239,14 @@ export default function Chat(props) {
                 className='messages__form'
                 onSubmit={(e) => {
                   e.preventDefault();
-                  onSend(
-                    Math.random().toString(),
-                    selectDialogue.user,
-                    staticKey,
-                    inputMessage.current.value,
-                    getToken,
-                    ctx,
-                  );
+                  // onSend(
+                  //   Math.random().toString(),
+                  //   selectDialogue.user,
+                  //   staticKey,
+                  //   inputMessage.current.value,
+                  //   onRefreshToken,
+                  //   ctx,
+                  // );
                   inputMessage.current.value = '';
                 }}
               >

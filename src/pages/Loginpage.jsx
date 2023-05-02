@@ -6,8 +6,8 @@ import Logo from '../assets/img/Logo.svg';
 import Context from '../context';
 import Input from '../components/UI/Input.jsx';
 import Switch from '../components/UI/Switch.jsx';
-import { onLogin } from '../api/Auth';
 import Alert from '../components/Layout/Alert';
+import onLogin from '../api/Auth/Login';
 
 
 export default function Loginpage(props) {

@@ -10,8 +10,9 @@ import Input from '../components/UI/Input.jsx';
 import Checkbox from '../components/UI/Checkbox.jsx';
 import Switch from '../components/UI/Switch.jsx';
 import schema from '../helpers/schema';
-import { onLogin, onSignup } from '../api/Auth';
 import Alert from '../components/Layout/Alert';
+import onRegister from '../api/Auth/Register';
+import onLogin from '../api/Auth/Login';
 
 
 export default function Signuppage(props) {
@@ -37,7 +38,7 @@ export default function Signuppage(props) {
       <div className="logo">
         <img src={Logo} alt="Simplify" className="logo__picture" />Simplify
       </div>
-      <form noValidate className="form" onSubmit={handleSubmit((data) => onSignup(data, ctx, onLogin))} >
+      <form noValidate className="form" onSubmit={handleSubmit((data) => onRegister(data, ctx, onLogin))} >
         <Input
           type="text"
           placeholder="UserName"

@@ -1,16 +1,35 @@
 import React, { useContext, useRef, useState } from 'react';
+
+//Data
 import Context from '../../context';
 import Dialogues from '../Chat/Dialogues';
 import Users from '../Chat/Users';
+
+//API
+import getUsers from '../../api/Users/Get';
+
+//Components
 import Input from '../UI/Input';
 import Navbar from './Navbar';
+
+//Icons
 import { HiMenu } from "@react-icons/all-files/hi/HiMenu";
 import { HiSearch } from "@react-icons/all-files/hi/HiSearch";
 
-export default function Sidebar({ users, setSelectDialogue, dialogues, dispatchDialogues, statusSidebar, setStatusSidebar, setPopupStatus }) {
+
+export default function Sidebar({
+  users,
+  setUsers,
+  setSelectDialogue,
+  dialogues,
+  dispatchDialogues,
+  statusSidebar,
+  setStatusSidebar,
+  setPopupStatus
+}) {
   const ctx = useContext(Context);
   const [statusNavbar, setStatusNavbar] = useState(false);
-  
+
   const [usersFilter, setUsersFilter] = useState([])
   const searchUsersRef = useRef(null);
 
@@ -29,12 +48,13 @@ export default function Sidebar({ users, setSelectDialogue, dialogues, dispatchD
   }
 
   const searchUsers = (filterValue) => {
+    getUsers(filterValue, setUsers)
     setUsersFilter(users.filter(user => user.includes(filterValue)))
     console.log(usersFilter);
   }
 
   return (
-    <div className={`sidebar ${statusSidebar ? '' :'sidebar-hidden'}`}>
+    <div className={`sidebar ${statusSidebar ? '' : 'sidebar-hidden'}`}>
       <div className='sidebar__header'>
         <div className='sidebar__menu' onClick={handleNavbarClick}>
           <HiMenu />
@@ -46,16 +66,16 @@ export default function Sidebar({ users, setSelectDialogue, dialogues, dispatchD
         {
           ((usersFilter.length > 0) && (searchUsersRef.current.value.length > 0)) ?
             (<Users users={usersFilter} setDialogue={setDialogue} setStatusSidebar={setStatusSidebar} />)
-          :
-          ((dialogues.length > 0) ?
-              <Dialogues dialogues={dialogues} setDialogue={setDialogue} setStatusSidebar={setStatusSidebar} />
             :
-            (
-              (users.length > 0) ?
+            ((dialogues.length > 0) ?
+              <Dialogues dialogues={dialogues} setDialogue={setDialogue} setStatusSidebar={setStatusSidebar} />
+              :
+              (
+                (users.length > 0) ?
                   <Users users={users} setDialogue={setDialogue} setStatusSidebar={setStatusSidebar} />
-                :
-                'Find a friend'
-            ))
+                  :
+                  'Find a friend'
+              ))
         }
         <form className='sidebar__search'>
           <Input
@@ -70,7 +90,7 @@ export default function Sidebar({ users, setSelectDialogue, dialogues, dispatchD
             <HiSearch />
           </button>
         </form>
-        
+
       </div>
     </div>
   )
