@@ -19,13 +19,14 @@ const initialStatusServer = {
 }
 
 function App() {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth') || null);
   const { theme, setTheme } = useTheme();
-  const [currentUser, setCurrentUser] = useState({});
-  const [authToken, setAuthToken] = useState('');
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser') || null);
+  const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || null);
+  const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken') || null);
   const [statusServer, dispatchStatusServer] = useReducer(dispatchStatusServerFn, initialStatusServer);
 
-  const handleThemeClick = (e) => {
+  const handleThemeClick = () => {
     if (theme === 'light') {
       setTheme('dark');
     } else {
@@ -42,6 +43,8 @@ function App() {
     setCurrentUser,
     authToken,
     setAuthToken,
+    refreshToken, 
+    setRefreshToken,
     statusServer,
     dispatchStatusServer
   }

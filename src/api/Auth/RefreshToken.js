@@ -6,12 +6,12 @@ const PRE_URL = 'Auth/';
 const onRefreshToken = async (ctx, fn, fnData) => {
   ctx.dispatchStatusServer({ type: 'LOADING' });
   const data = JSON.stringify({
-    "refreshToken": ctx.currentUser.refreshToken,
+    "refreshToken": ctx.refreshToken,
   });
 
   try {
     const response = await axios(configPost(`${PRE_URL}RefreshToken`, data));
-    ctx.setCurrentUser(response.data);
+    ctx.setCurrentUser(response.data.user.username);
     axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.accessToken}`
     ctx.setAuthToken(response.data.accessToken)
     fn(...fnData);

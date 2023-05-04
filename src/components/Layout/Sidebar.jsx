@@ -15,6 +15,7 @@ import Navbar from './Navbar';
 //Icons
 import { HiMenu } from "@react-icons/all-files/hi/HiMenu";
 import { HiSearch } from "@react-icons/all-files/hi/HiSearch";
+import md5 from 'md5';
 
 
 export default function Sidebar({
@@ -59,7 +60,7 @@ export default function Sidebar({
         <div className='sidebar__menu' onClick={handleNavbarClick}>
           <HiMenu />
         </div>
-        <h2 className='sidebar__title'>Convesation</h2>
+        <p className='sidebar__title'>{ctx.currentUser.toUpperCase()}</p>
       </div>
       <Navbar status={statusNavbar} setPopupStatus={setPopupStatus} />
       <div className='sidebar__dialogues'>

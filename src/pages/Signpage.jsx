@@ -1,25 +1,31 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { yupResolver } from '@hookform/resolvers/yup';
-
-import Logo from '../assets/img/Logo.svg';
-import Context from '../context';
-import Input from '../components/UI/Input.jsx';
-import Checkbox from '../components/UI/Checkbox.jsx';
-import Switch from '../components/UI/Switch.jsx';
-import schema from '../helpers/schema';
-import Alert from '../components/Layout/Alert';
 import onRegister from '../api/Auth/Register';
 import onLogin from '../api/Auth/Login';
+
+import Context from '../context';
+
+import { yupResolver } from '@hookform/resolvers/yup';
+import schema from '../helpers/schema';
+
+import Input from '../components/UI/Input.jsx';
+import Checkbox from '../components/UI/Checkbox.jsx';
+import Alert from '../components/Layout/Alert';
+import Header from '../components/Layout/Header';
+import Logo from '../components/Layout/Logo';
+import { Link } from 'react-router-dom';
 
 
 export default function Signuppage(props) {
   const ctx = useContext(Context);
   const [checked, setChecked] = useState(false);
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
     mode: "onBlur",
     resolver: yupResolver(schema)
   });
@@ -27,18 +33,13 @@ export default function Signuppage(props) {
   return (
     <div className='container'>
       <Alert />
-      <div className="header">
-        <Link to="../login" >Login</Link>
-        <Switch
-          type="inverse"
-          onChange={ctx.handleThemeClick}
-          checked={(ctx.theme === 'dark') && "checked"}
-        />
-      </div>
-      <div className="logo">
-        <img src={Logo} alt="Simplify" className="logo__picture" />Simplify
-      </div>
-      <form noValidate className="form" onSubmit={handleSubmit((data) => onRegister(data, ctx, onLogin))} >
+      <Header path='../login' title='Login' />
+      <Logo />
+      <form
+        noValidate
+        className="form"
+        onSubmit={handleSubmit((data) => onRegister(data, ctx, onLogin))}
+      >
         <Input
           type="text"
           placeholder="UserName"
@@ -65,9 +66,11 @@ export default function Signuppage(props) {
           errors={errors}
           checked={checked}
           setchecked={setChecked}
-          label="I agree to the Terms and Conditions"
+          label='I agree to the '
           {...register("checkTerms", { required: true })}
-        />
+        >
+          <Link to='../conditions' style={{marginLeft: '4px'}}>Terms and Conditions</Link>
+        </Checkbox>
         <input type="submit" value="Sign up" className="button" />
       </form>
     </div>

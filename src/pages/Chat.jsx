@@ -1,18 +1,21 @@
-import * as signalR from '@microsoft/signalr';
-import md5 from 'md5';
 import React, { useContext, useEffect, useReducer, useRef, useState } from 'react';
-import Alert from '../components/Layout/Alert';
-import Sidebar from '../components/Layout/Sidebar';
-import Input from '../components/UI/Input';
+
 import Context from '../context';
 import initMessages from '../helpers/initMessages';
+
+import Alert from '../components/Layout/Alert';
+import Sidebar from '../components/Layout/Sidebar';
+import ContextMenu from '../components/UI/ContextMenu';
+import Popup from '../components/UI/Popup';
+import Input from '../components/UI/Input';
+
+import * as signalR from '@microsoft/signalr';
+import md5 from 'md5';
+
 import { IoIosPaperPlane } from "@react-icons/all-files/io/IoIosPaperPlane";
 import { HiArrowLeft } from "@react-icons/all-files/hi/HiArrowLeft";
 import { HiDotsVertical } from "@react-icons/all-files/hi/HiDotsVertical";
-import ContextMenu from '../components/UI/ContextMenu';
-import Popup from '../components/UI/Popup';
-import onRefreshToken from '../api/Auth/RefreshToken';
-import getUsers from '../api/Users/Get';
+import axios from 'axios';
 
 const reduceDialogues = (state, action) => {
 
@@ -70,7 +73,6 @@ const reduceDialogues = (state, action) => {
   }
 }
 
-
 export default function Chat(props) {
   const ctx = useContext(Context);
   const inputMessage = useRef(null);
@@ -107,7 +109,6 @@ export default function Chat(props) {
     }
   ]
 
-
   const connection = new signalR.HubConnectionBuilder()
     .withUrl("http://localhost:5000/Hub", {
       accessTokenFactory: () => ctx.authToken,
@@ -132,10 +133,10 @@ export default function Chat(props) {
   });
 
   connection.on("newmessage", async (data) => {
-    if (data.receiver === ctx.currentUser.user.username) {
+    if (data.receiver === ctx.currentUser) {
       dispatchDialogues({ type: 'SELF_SEND', ...data })
     }
-    if (data.sender === ctx.currentUser.user.username) {
+    if (data.sender === ctx.currentUser) {
       dispatchDialogues({ type: 'OTHER_SEND', ...data })
     }
   });
@@ -145,7 +146,6 @@ export default function Chat(props) {
       setUsers(users.splice(users.includes(data)))
     }
   });
-
 
   connection.onclose(async () => {
     await start();
@@ -170,6 +170,9 @@ export default function Chat(props) {
   useEffect(() => {
     if (!statusConnection) {
       start()
+    }
+    if(ctx.authToken) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${ctx.authToken}`;
     }
   }, [])
 
@@ -228,7 +231,7 @@ export default function Chat(props) {
                   {dialogues.find(dialogue => dialogue.receiver === selectDialogue.user) && dialogues.find(dialogue => dialogue.receiver === selectDialogue.user).messages.map((message, index) =>
                     <div
                       key={index + Math.random()}
-                      className={`messages__message messages__message-${(message.receiver !== ctx.currentUser.user.username) ? 'mine' : 'other'}`}
+                      className={`messages__message messages__message-${(message.receiver !== ctx.currentUser) ? 'mine' : 'other'}`}
                     >
                       {message.message}
                     </div>

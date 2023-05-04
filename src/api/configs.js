@@ -1,6 +1,7 @@
 import { parse, stringify } from "qs";
 
-const SERVER = 'localhost';
+const SERVER = localStorage.getItem('SERVER') || prompt();
+localStorage.setItem('SERVER', SERVER);
 const BASE_URL = `http://${SERVER}:5000/api/`;
 const headers = {
   'Access-Control-Allow-Origin': '*',

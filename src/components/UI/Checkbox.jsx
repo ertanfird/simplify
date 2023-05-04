@@ -26,6 +26,7 @@ const Checkbox = forwardRef((props, ref) => {
         className="checkbox__label"
       >
         {props.label}
+        {props.children}
       </label>
     </div>
   )
