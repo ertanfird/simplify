@@ -1,19 +1,26 @@
 import axios from 'axios';
-import { configGet } from '../configs';
+import { configPost } from '../configs';
 
 const PRE_URL = 'Users/';
 
-const getUsers = async (username, setUsers) => {
-  const data = {
-    "username": username
-  };
+const getUsers = async (username, setUsers, ctx) => {
+  const data = {username: username};  
 
   try {
-    const response = await axios(configGet(`${PRE_URL}Get`, data));
-    console.log(response);
+    const response = await axios(configPost(`${PRE_URL}Get/`, data));
+    setUsers([response.data])
   } catch (error) {
-    console.log(error);
-  }
+    console.log(error.response.data);
+    ctx.dispatchStatusServer({
+      type: 'ERROR',
+      data: error.response.data
+    });
+  } finally {
+  setTimeout(() => {
+    ctx.dispatchStatusServer({ type: 'DEFAULT' });
+  }, "2000");
+}
+  
 }
 
 export default getUsers;

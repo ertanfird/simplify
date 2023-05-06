@@ -3,7 +3,6 @@ import React, { useContext, useRef, useState } from 'react';
 //Data
 import Context from '../../context';
 import Dialogues from '../Chat/Dialogues';
-import Users from '../Chat/Users';
 
 //API
 import getUsers from '../../api/Users/Get';
@@ -11,12 +10,11 @@ import getUsers from '../../api/Users/Get';
 //Components
 import Input from '../UI/Input';
 import Navbar from './Navbar';
+import Users from '../Chat/Users';
 
 //Icons
 import { HiMenu } from "@react-icons/all-files/hi/HiMenu";
 import { HiSearch } from "@react-icons/all-files/hi/HiSearch";
-import md5 from 'md5';
-
 
 export default function Sidebar({
   users,
@@ -26,7 +24,8 @@ export default function Sidebar({
   dispatchDialogues,
   statusSidebar,
   setStatusSidebar,
-  setPopupStatus
+  setPopupStatus,
+  setNeedRefreshToken
 }) {
   const ctx = useContext(Context);
   const [statusNavbar, setStatusNavbar] = useState(false);
@@ -49,8 +48,8 @@ export default function Sidebar({
   }
 
   const searchUsers = (filterValue) => {
-    getUsers(filterValue, setUsers)
-    setUsersFilter(users.filter(user => user.includes(filterValue)))
+    getUsers(filterValue, setUsers, ctx)
+    setUsersFilter(users.filter(user => user.username.includes(filterValue)))
     console.log(usersFilter);
   }
 

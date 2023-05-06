@@ -69,6 +69,8 @@
     flex-direction: column;
     gap: 40px;
     overflow: auto;
+    max-height: calc(100% - 112px);
+    padding-bottom: 60px;
 
     &::-webkit-scrollbar {
       width: 6px; /* ширина для вертикального скролла */

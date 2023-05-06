@@ -15,10 +15,6 @@ const configGet = (url, data) => (
     method: 'get',
     url: `${BASE_URL}${url}`,
     headers: headers,
-    paramsSerializer: {
-      encode: parse,
-      serialize: stringify,
-    },
     params: data
   }
 );

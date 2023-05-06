@@ -3,19 +3,15 @@ import React, { useContext, useEffect, useReducer, useRef, useState } from 'reac
 import Context from '../context';
 import initMessages from '../helpers/initMessages';
 
-import Alert from '../components/Layout/Alert';
 import Sidebar from '../components/Layout/Sidebar';
-import ContextMenu from '../components/UI/ContextMenu';
 import Popup from '../components/UI/Popup';
-import Input from '../components/UI/Input';
+
+import onRefreshToken from '../api/Auth/RefreshToken';
 
 import * as signalR from '@microsoft/signalr';
-import md5 from 'md5';
 
-import { IoIosPaperPlane } from "@react-icons/all-files/io/IoIosPaperPlane";
-import { HiArrowLeft } from "@react-icons/all-files/hi/HiArrowLeft";
-import { HiDotsVertical } from "@react-icons/all-files/hi/HiDotsVertical";
 import axios from 'axios';
+import Messages from '../components/Chat/Messages';
 
 const reduceDialogues = (state, action) => {
 
@@ -73,9 +69,11 @@ const reduceDialogues = (state, action) => {
   }
 }
 
+const usersInit = ['testerTwo', 'Ertanfird', 'okeoke', 'assCracker', 'SiliconValey', 'C#Enjoyer', 'PrisonLover', 'PeopleHater']
+
 export default function Chat(props) {
   const ctx = useContext(Context);
-  const inputMessage = useRef(null);
+  const inputMessageRef = useRef(null);
   const messagesBodyRef = useRef(null);
   const [users, setUsers] = useState([]);
   const [statusSidebar, setStatusSidebar] = useState(true);
@@ -87,27 +85,10 @@ export default function Chat(props) {
   const [dialogues, dispatchDialogues] = useReducer(reduceDialogues, initMessages)
   const [statusConnection, setStatusConnection] = useState(false);
   const [staticKey, setStaticKey] = useState('1');
+  const [needRefreshToken, setNeedRefreshToken] = useState(false)
 
   const [contextMenuStatus, setContextMenuStatus] = useState(false);
   const [popupStatus, setPopupStatus] = useState(false);
-
-  const contextMenuArr = [
-    {
-      title: 'Set StaticKey',
-      function: ()=>{setStaticKey(prompt("input staticKey").toString())}
-    },
-    {
-      title: 'Remove dialogue',
-      function: () => { 
-        dispatchDialogues({ type: 'DELETE_DIALOGUE', receiver: selectDialogue.user }) 
-        setSelectDialogue({
-          status: false,
-          user: null
-        });
-        setContextMenuStatus(false)
-      }
-    }
-  ]
 
   const connection = new signalR.HubConnectionBuilder()
     .withUrl("http://localhost:5000/Hub", {
@@ -132,18 +113,18 @@ export default function Chat(props) {
     setUsers([data]);
   });
 
+  connection.on("usergetsoffline", (data) => {
+    if (users.includes(data)) {
+      setUsers(users.splice(users.includes(data)))
+    }
+  });
+
   connection.on("newmessage", async (data) => {
     if (data.receiver === ctx.currentUser) {
       dispatchDialogues({ type: 'SELF_SEND', ...data })
     }
     if (data.sender === ctx.currentUser) {
       dispatchDialogues({ type: 'OTHER_SEND', ...data })
-    }
-  });
-
-  connection.on("usergetsoffline", (data) => {
-    if (users.includes(data)) {
-      setUsers(users.splice(users.includes(data)))
     }
   });
 
@@ -157,6 +138,7 @@ export default function Chat(props) {
       setStatusConnection(true);
       console.log("SignalR Connected.");
     } catch (err) {
+      // setNeedRefreshToken({status: true, fn: start})
       const disconnectedError = `Error: Cannot start a HubConnection that is not in the 'Disconnected' state.`
       if (err.toString() !== disconnectedError) {
         console.error(err);
@@ -171,10 +153,16 @@ export default function Chat(props) {
     if (!statusConnection) {
       start()
     }
-    if(ctx.authToken) {
+    if (ctx.authToken) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${ctx.authToken}`;
     }
   }, [])
+
+  useEffect(() => {
+    if (needRefreshToken) {
+      onRefreshToken(ctx, needRefreshToken.fn, needRefreshToken.fnData)
+    }
+  }, [needRefreshToken])
 
   useEffect(() => {
     messagesBodyRef.current?.scrollTo({
@@ -197,79 +185,21 @@ export default function Chat(props) {
         statusSidebar={statusSidebar}
         setStatusSidebar={setStatusSidebar}
         setPopupStatus={setPopupStatus}
+        setNeedRefreshToken={setNeedRefreshToken}
       />
-      <div className='messages'>
-        {
-          selectDialogue.status ?
-            <>
-              <div className='messages__header'>
-                <article className='profile profile'>
-                  <div className='profile__arrow' onClick={() => { setStatusSidebar(true) }}>
-                    <HiArrowLeft />
-                  </div>
-                  <div className={`profile__avatar profile__avatar-${parseInt(md5(selectDialogue.user).replace(/[^\d]/g, '')).toString()[0]}`}>{selectDialogue.user[0].toUpperCase()}</div>
-                  <div className='profile__content'>
-                    <p className='profile__title'>{selectDialogue.user}</p>
-                    <p className='profile__status'>Online</p>
-                  </div>
-                </article>
-                <div className='messages__more'>
-                  <HiDotsVertical 
-                  onContextMenu={(e)=> {e.preventDefault();setContextMenuStatus((prevStatus)=>!prevStatus)}}
-                  onClick={(e) => { e.preventDefault(); setContextMenuStatus((prevStatus) => !prevStatus) }}
-                  />
-                  {
-                    contextMenuStatus &&
-                    <ContextMenu contextMenuArr={contextMenuArr}></ContextMenu>
-                  }
-                  
-                </div>
-              </div>
-              <div className='messages__body' ref={messagesBodyRef} >
-                <Alert />
-                <div className='messages__container' >
-                  {dialogues.find(dialogue => dialogue.receiver === selectDialogue.user) && dialogues.find(dialogue => dialogue.receiver === selectDialogue.user).messages.map((message, index) =>
-                    <div
-                      key={index + Math.random()}
-                      className={`messages__message messages__message-${(message.receiver !== ctx.currentUser) ? 'mine' : 'other'}`}
-                    >
-                      {message.message}
-                    </div>
-                  )}
-                </div>
-              </div>
-              <form
-                className='messages__form'
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  // onSend(
-                  //   Math.random().toString(),
-                  //   selectDialogue.user,
-                  //   staticKey,
-                  //   inputMessage.current.value,
-                  //   onRefreshToken,
-                  //   ctx,
-                  // );
-                  inputMessage.current.value = '';
-                }}
-              >
-                <Input
-                  className='input messages__input'
-                  type="text"
-                  placeholder="Write messages"
-                  name="message"
-                  autoComplete="off"
-                  ref={inputMessage}
-                />
-                <button type='submit' className='messages__send'>
-                  <IoIosPaperPlane />
-                </button>
-              </form>
-            </>
-            :
-            <span className='messages__promt'>Select the dialogue</span>
-        }
-      </div>
+      <Messages
+        dialogues={dialogues}
+        selectDialogue={selectDialogue}
+        setSelectDialogue={setSelectDialogue}
+        setStatusSidebar={setStatusSidebar}
+        contextMenuStatus={contextMenuStatus}
+        setContextMenuStatus={setContextMenuStatus}
+        setStaticKey={setStaticKey}
+        dispatchDialogues={dispatchDialogues}
+        messagesBodyRef={messagesBodyRef}
+        inputMessageRef={inputMessageRef}
+        setNeedRefreshToken={setNeedRefreshToken}
+      />
     </div>
   );
 }
