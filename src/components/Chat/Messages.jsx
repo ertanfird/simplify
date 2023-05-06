@@ -24,7 +24,9 @@ export default function Messages({
   setStaticKey,
   dispatchDialogues,
   messagesBodyRef,
-  inputMessageRef
+  inputMessageRef,
+  statusConnection,
+  sendMessage
 }) {
   const ctx = useContext(Context);
   return (
@@ -78,6 +80,14 @@ export default function Messages({
               className='messages__form'
               onSubmit={(e) => {
                 e.preventDefault();
+                if (statusConnection.state === 'Connected'){
+                  sendMessage(statusConnection, selectDialogue.user, inputMessageRef.current.value)
+                } else {
+                  setTimeout(()=> {
+                    sendMessage(statusConnection, selectDialogue.user, inputMessageRef.current.value)
+                  }, 2000)
+                }
+                
                 // onSend(
                 //   Math.random().toString(),
                 //   selectDialogue.user,

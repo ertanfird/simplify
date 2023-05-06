@@ -49,8 +49,8 @@ export default function Sidebar({
 
   const searchUsers = (filterValue) => {
     getUsers(filterValue, setUsers, ctx)
-    setUsersFilter(users.filter(user => user.username.includes(filterValue)))
-    console.log(usersFilter);
+    // setUsersFilter(users.filter(user => user.username.includes(filterValue)))
+    // console.log(usersFilter);
   }
 
   return (

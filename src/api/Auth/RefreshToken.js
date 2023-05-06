@@ -15,6 +15,7 @@ const onRefreshToken = async (ctx, fn, fnData) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.accessToken}`
     ctx.setAuthToken(response.data.accessToken)
     fn(...fnData);
+    ctx.setNeedRefreshToken();
   } catch (error) {
     console.log(error);
     ctx.dispatchStatusServer({ type: 'ERROR', data: error.response.data.errors })

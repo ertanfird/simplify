@@ -85,7 +85,6 @@ export default function Chat(props) {
   const [dialogues, dispatchDialogues] = useReducer(reduceDialogues, initMessages)
   const [statusConnection, setStatusConnection] = useState(false);
   const [staticKey, setStaticKey] = useState('1');
-  const [needRefreshToken, setNeedRefreshToken] = useState(false)
 
   const [contextMenuStatus, setContextMenuStatus] = useState(false);
   const [popupStatus, setPopupStatus] = useState(false);
@@ -135,9 +134,10 @@ export default function Chat(props) {
   const start = async () => {
     try {
       await connection.start();
-      setStatusConnection(true);
+      setStatusConnection(connection);
       console.log("SignalR Connected.");
     } catch (err) {
+      setStatusConnection(false);
       // setNeedRefreshToken({status: true, fn: start})
       const disconnectedError = `Error: Cannot start a HubConnection that is not in the 'Disconnected' state.`
       if (err.toString() !== disconnectedError) {
@@ -146,6 +146,18 @@ export default function Chat(props) {
       } else {
         console.warn(disconnectedError);
       }
+    }
+  };
+
+  const sendMessage = async (currentConnection, receiver, message) => {
+    try {
+      await currentConnection.invoke("SendMessage", {
+        "id": `${Math.random()}${Date.now()}`, 
+        "receiver": receiver, 
+        "message": message
+      });
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -159,10 +171,10 @@ export default function Chat(props) {
   }, [])
 
   useEffect(() => {
-    if (needRefreshToken) {
-      onRefreshToken(ctx, needRefreshToken.fn, needRefreshToken.fnData)
+    if (ctx.needRefreshToken) {
+      onRefreshToken(ctx, ctx.needRefreshToken.fn, ctx.needRefreshToken.fnData)
     }
-  }, [needRefreshToken])
+  }, [ctx.needRefreshToken])
 
   useEffect(() => {
     messagesBodyRef.current?.scrollTo({
@@ -185,7 +197,6 @@ export default function Chat(props) {
         statusSidebar={statusSidebar}
         setStatusSidebar={setStatusSidebar}
         setPopupStatus={setPopupStatus}
-        setNeedRefreshToken={setNeedRefreshToken}
       />
       <Messages
         dialogues={dialogues}
@@ -198,7 +209,8 @@ export default function Chat(props) {
         dispatchDialogues={dispatchDialogues}
         messagesBodyRef={messagesBodyRef}
         inputMessageRef={inputMessageRef}
-        setNeedRefreshToken={setNeedRefreshToken}
+        statusConnection={statusConnection}
+        sendMessage={sendMessage}
       />
     </div>
   );

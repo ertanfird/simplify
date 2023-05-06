@@ -25,6 +25,7 @@ function App() {
   const [authToken, setAuthToken] = useState(localStorage.getItem('authToken') || null);
   const [refreshToken, setRefreshToken] = useState(localStorage.getItem('refreshToken') || null);
   const [statusServer, dispatchStatusServer] = useReducer(dispatchStatusServerFn, initialStatusServer);
+  const [needRefreshToken, setNeedRefreshToken] = useState(false);
 
   const handleThemeClick = () => {
     if (theme === 'light') {
@@ -46,7 +47,9 @@ function App() {
     refreshToken, 
     setRefreshToken,
     statusServer,
-    dispatchStatusServer
+    dispatchStatusServer,
+    needRefreshToken,
+    setNeedRefreshToken
   }
 
   return (

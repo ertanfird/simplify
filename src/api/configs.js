@@ -5,9 +5,7 @@ localStorage.setItem('SERVER', SERVER);
 const BASE_URL = `http://${SERVER}:5000/api/`;
 const headers = {
   'Access-Control-Allow-Origin': '*',
-  'Content-Type': 'application/json',
-  'Accept': '*/*',
-  'Accept-Encoding': 'gzip, deflate, br'
+  'Content-Type': 'application/json'
 }
 
 const configGet = (url, data) => (
