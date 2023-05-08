@@ -2,24 +2,18 @@ import React, { useContext } from 'react';
 
 import Context from '../../context';
 
-import ContextMenu from '../UI/ContextMenu';
 import Input from '../UI/Input';
-
-import contextMenuArr from '../../helpers/contextMenuArr';
-
-import { IoIosPaperPlane } from "@react-icons/all-files/io/IoIosPaperPlane";
-import { HiArrowLeft } from "@react-icons/all-files/hi/HiArrowLeft";
-import { HiDotsVertical } from "@react-icons/all-files/hi/HiDotsVertical";
-
-import md5 from 'md5';
 import Alert from '../Layout/Alert';
 
-export default function Messages({ 
+import { IoIosPaperPlane } from "@react-icons/all-files/io/IoIosPaperPlane";
+import MessagesHeader from './MessagesHeader';
+
+export default function Messages({
   dialogues,
-  selectDialogue, 
+  selectDialogue,
   setSelectDialogue,
-  setStatusSidebar, 
-  contextMenuStatus, 
+  setStatusSidebar,
+  contextMenuStatus,
   setContextMenuStatus,
   setStaticKey,
   dispatchDialogues,
@@ -34,35 +28,14 @@ export default function Messages({
       {
         selectDialogue.status ?
           <>
-            <div className='messages__header'>
-              <article className='profile profile'>
-                <div className='profile__arrow' onClick={() => { setStatusSidebar(true) }}>
-                  <HiArrowLeft />
-                </div>
-                <div className={`profile__avatar profile__avatar-${parseInt(md5(selectDialogue.user).replace(/[^\d]/g, '')).toString()[0]}`}>{selectDialogue.user[0].toUpperCase()}</div>
-                <div className='profile__content'>
-                  <p className='profile__title'>{selectDialogue.user}</p>
-                  <p className='profile__status'>Online</p>
-                </div>
-              </article>
-              <div className='messages__more'>
-                <HiDotsVertical
-                  onContextMenu={(e) => { e.preventDefault(); setContextMenuStatus((prevStatus) => !prevStatus) }}
-                  onClick={(e) => { e.preventDefault(); setContextMenuStatus((prevStatus) => !prevStatus) }}
-                />
-                {
-                  contextMenuStatus &&
-                  <ContextMenu contextMenuArr={contextMenuArr(
-                    setStaticKey,
-                    dispatchDialogues,
-                    selectDialogue,
-                    setSelectDialogue,
-                    setContextMenuStatus
-                  )}></ContextMenu>
-                }
-
-              </div>
-            </div>
+            <MessagesHeader
+              setSelectDialogue={setSelectDialogue}
+              setStatusSidebar={setStatusSidebar}
+              contextMenuStatus={contextMenuStatus}
+              setContextMenuStatus={setContextMenuStatus}
+              setStaticKey={setStaticKey}
+              dispatchDialogues={dispatchDialogues}
+            />
             <div className='messages__body' ref={messagesBodyRef} >
               <Alert />
               <div className='messages__container' >
@@ -80,22 +53,13 @@ export default function Messages({
               className='messages__form'
               onSubmit={(e) => {
                 e.preventDefault();
-                if (statusConnection.state === 'Connected'){
+                if (statusConnection.state === 'Connected') {
                   sendMessage(statusConnection, selectDialogue.user, inputMessageRef.current.value)
                 } else {
-                  setTimeout(()=> {
+                  setTimeout(() => {
                     sendMessage(statusConnection, selectDialogue.user, inputMessageRef.current.value)
                   }, 2000)
                 }
-                
-                // onSend(
-                //   Math.random().toString(),
-                //   selectDialogue.user,
-                //   staticKey,
-                //   inputMessageRef.current.value,
-                //   onRefreshToken,
-                //   ctx,
-                // );
                 inputMessageRef.current.value = '';
               }}
             >

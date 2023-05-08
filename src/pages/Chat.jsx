@@ -69,8 +69,6 @@ const reduceDialogues = (state, action) => {
   }
 }
 
-const usersInit = ['testerTwo', 'Ertanfird', 'okeoke', 'assCracker', 'SiliconValey', 'C#Enjoyer', 'PrisonLover', 'PeopleHater']
-
 export default function Chat(props) {
   const ctx = useContext(Context);
   const inputMessageRef = useRef(null);

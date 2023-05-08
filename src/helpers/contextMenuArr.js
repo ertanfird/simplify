@@ -1,9 +1,11 @@
+import addContacts from "../api/Contacts/Add";
+
 const contextMenuArr = ({ 
   setStaticKey, 
   dispatchDialogues, 
   selectDialogue, 
   setSelectDialogue, 
-  setContextMenuStatus 
+  setContextMenuStatus,
 }) => {
   return [
     {
@@ -20,6 +22,10 @@ const contextMenuArr = ({
         });
         setContextMenuStatus(false)
       }
+    },
+    {
+      title: 'Add contact',
+      function: addContacts(selectDialogue)
     }
   ]
 };

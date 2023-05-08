@@ -64,7 +64,8 @@ export default function Sidebar({
       <Navbar status={statusNavbar} setPopupStatus={setPopupStatus} />
       <div className='sidebar__dialogues'>
         {
-          ((usersFilter.length > 0) && (searchUsersRef.current.value.length > 0)) ?
+          // ((usersFilter.length > 0) && (searchUsersRef.current.value.length > 0)) ?
+          false ?
             (<Users users={usersFilter} setDialogue={setDialogue} setStatusSidebar={setStatusSidebar} />)
             :
             ((dialogues.length > 0) ?
