@@ -11,7 +11,7 @@ import onRefreshToken from '../api/Auth/RefreshToken';
 import * as signalR from '@microsoft/signalr';
 
 import axios from 'axios';
-import Messages from '../components/Chat/Messages';
+import Messages from '../components/Chat/Messages/Messages';
 
 const reduceDialogues = (state, action) => {
 
@@ -74,6 +74,7 @@ export default function Chat(props) {
   const inputMessageRef = useRef(null);
   const messagesBodyRef = useRef(null);
   const [users, setUsers] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const [statusSidebar, setStatusSidebar] = useState(true);
   const [selectDialogue, setSelectDialogue] = useState({
     status: false,
@@ -82,7 +83,7 @@ export default function Chat(props) {
 
   const [dialogues, dispatchDialogues] = useReducer(reduceDialogues, initMessages)
   const [statusConnection, setStatusConnection] = useState(false);
-  const [staticKey, setStaticKey] = useState('1');
+  const [staticKey, setStaticKey] = useState('');
 
   const [contextMenuStatus, setContextMenuStatus] = useState(false);
   const [popupStatus, setPopupStatus] = useState(false);
@@ -125,6 +126,30 @@ export default function Chat(props) {
     }
   });
 
+  const sendMessage = async (currentConnection, receiver, refValue) => {
+    try {
+      await currentConnection.invoke("SendMessage", {
+        "id": `${Math.random()}${Date.now()}`,
+        "receiver": receiver,
+        "message": refValue.current.value
+      });
+      refValue.current.value = '';
+    } catch (err) {
+      console.error(err);
+      if (err.message === "An unexpected error occurred invoking 'SendMessage' on the server. HubException: Receiver is not online!"){
+        ctx.dispatchStatusServer({
+          type: 'ERROR',
+          data: 'Receiver is not online!'
+        });
+      }
+    } finally {
+      setTimeout(() => {
+        ctx.dispatchStatusServer({ type: 'DEFAULT' })
+      }, "2000");
+    }
+  };
+
+
   connection.onclose(async () => {
     await start();
   });
@@ -147,17 +172,7 @@ export default function Chat(props) {
     }
   };
 
-  const sendMessage = async (currentConnection, receiver, message) => {
-    try {
-      await currentConnection.invoke("SendMessage", {
-        "id": `${Math.random()}${Date.now()}`, 
-        "receiver": receiver, 
-        "message": message
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  
 
   useEffect(() => {
     if (!statusConnection) {
@@ -209,6 +224,7 @@ export default function Chat(props) {
         inputMessageRef={inputMessageRef}
         statusConnection={statusConnection}
         sendMessage={sendMessage}
+        users={users}
       />
     </div>
   );

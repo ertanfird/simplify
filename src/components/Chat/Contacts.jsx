@@ -1,10 +1,10 @@
 import React from 'react'
 import Profile from './Profile';
 
-export default function Users({ users, setDialogue, setStatusSidebar }) {
+export default function Contacts({ contacts, setDialogue, setStatusSidebar }) {
   return (
     <><h3>Users</h3>
-      {users.map((user, index) =>
+      {contacts.map((user, index) =>
         <Profile
           key={index + Math.random()}
           onClick={() => {
