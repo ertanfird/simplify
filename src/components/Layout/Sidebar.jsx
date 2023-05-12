@@ -25,12 +25,13 @@ export default function Sidebar({
   statusSidebar,
   setStatusSidebar,
   setPopupStatus,
-  setNeedRefreshToken
+  setNeedRefreshToken,
+  usersFilter,
+  setUsersFilter
 }) {
   const ctx = useContext(Context);
   const [statusNavbar, setStatusNavbar] = useState(false);
 
-  const [usersFilter, setUsersFilter] = useState([])
   const searchUsersRef = useRef(null);
 
   const handleNavbarClick = () => {
@@ -49,8 +50,8 @@ export default function Sidebar({
 
   const searchUsers = (filterValue) => {
     getUsers(filterValue, setUsers, ctx)
-    // setUsersFilter(users.filter(user => user.username.includes(filterValue)))
-    // console.log(usersFilter);
+    setUsersFilter(users.filter(user => user.username.includes(filterValue)))
+    console.log(usersFilter);
   }
 
   return (
@@ -64,8 +65,7 @@ export default function Sidebar({
       <Navbar status={statusNavbar} setPopupStatus={setPopupStatus} />
       <div className='sidebar__dialogues'>
         {
-          // ((usersFilter.length > 0) && (searchUsersRef.current.value.length > 0)) ?
-          false ?
+          ((usersFilter.length > 0) && (searchUsersRef.current.value.length > 0)) ?
             (<Users users={usersFilter} setDialogue={setDialogue} setStatusSidebar={setStatusSidebar} />)
             :
             ((dialogues.length > 0) ?

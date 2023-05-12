@@ -74,6 +74,7 @@ export default function Chat(props) {
   const inputMessageRef = useRef(null);
   const messagesBodyRef = useRef(null);
   const [users, setUsers] = useState([]);
+  const [usersFilter, setUsersFilter] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [statusSidebar, setStatusSidebar] = useState(true);
   const [selectDialogue, setSelectDialogue] = useState({
@@ -123,6 +124,9 @@ export default function Chat(props) {
     }
     if (data.sender === ctx.currentUser) {
       dispatchDialogues({ type: 'OTHER_SEND', ...data })
+    }
+    if( !users.find(user => user.username === data.sender)){
+      setUsers(prevUsers => [...prevUsers, {username: data.sender, isOnline: true}])
     }
   });
 
@@ -210,6 +214,8 @@ export default function Chat(props) {
         statusSidebar={statusSidebar}
         setStatusSidebar={setStatusSidebar}
         setPopupStatus={setPopupStatus}
+        usersFilter={usersFilter}
+        setUsersFilter={setUsersFilter}
       />
       <Messages
         dialogues={dialogues}
