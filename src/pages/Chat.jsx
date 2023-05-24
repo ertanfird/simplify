@@ -3,10 +3,11 @@ import React, { useContext, useEffect, useReducer, useRef, useState } from 'reac
 import Context from '../context';
 import initMessages from '../helpers/initMessages';
 
-import Sidebar from '../components/Layout/Sidebar';
+import Sidebar from '../components/Layout/Sidebar/Sidebar';
 import Popup from '../components/UI/Popup';
 
 import onRefreshToken from '../api/Auth/RefreshToken';
+import getTemporary from '../api/Contacts/Temporary';
 
 import * as signalR from '@microsoft/signalr';
 
@@ -139,13 +140,11 @@ export default function Chat(props) {
       });
       refValue.current.value = '';
     } catch (err) {
-      console.error(err);
-      if (err.message === "An unexpected error occurred invoking 'SendMessage' on the server. HubException: Receiver is not online!"){
-        ctx.dispatchStatusServer({
-          type: 'ERROR',
-          data: 'Receiver is not online!'
-        });
-      }
+      const сlientHubException = err.message.match(/[^:]+:\s*\[(.*)\]/)[1]
+      ctx.dispatchStatusServer({
+        type: 'ERROR',
+        data: сlientHubException
+      });
     } finally {
       setTimeout(() => {
         ctx.dispatchStatusServer({ type: 'DEFAULT' })
@@ -192,6 +191,10 @@ export default function Chat(props) {
       onRefreshToken(ctx, ctx.needRefreshToken.fn, ctx.needRefreshToken.fnData)
     }
   }, [ctx.needRefreshToken])
+
+  useEffect(()=>{
+    getTemporary(setUsers);
+  },[])
 
   useEffect(() => {
     messagesBodyRef.current?.scrollTo({

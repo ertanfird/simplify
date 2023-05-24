@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { configDelete } from './configs';
+import { configDelete } from '../configs';
 
 const PRE_URL = 'Contacts/';
 
